@@ -210,10 +210,6 @@ function updateCartCount() {
     const cartCountElement = document.querySelector('.cart-count');
     if (cartCountElement) {
         cartCountElement.textContent = cartCount;
-    }
-}
-    if (cartCountElement) {
-        cartCountElement.textContent = cartCount;
         cartCountElement.style.animation = 'none';
         setTimeout(() => {
             cartCountElement.style.animation = 'pulse 0.5s ease';
