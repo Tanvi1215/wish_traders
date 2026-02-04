@@ -191,31 +191,18 @@ const inquiryButtons = document.querySelectorAll('.btn-add-cart');
 
 inquiryButtons.forEach(button => {
     button.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // Get product name
         const productCard = e.target.closest('.product-card');
         const productTitle = productCard.querySelector('.product-title').textContent;
         
-        // Scroll to contact form smoothly
-        const contactSection = document.getElementById('contact');
-        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Show notification
+        showNotification(`Inquiry added for ${productTitle}. Please contact us for pricing details.`, 'info');
         
-        // Wait for scroll to complete, then pre-fill subject
-        setTimeout(() => {
-            const subjectField = document.getElementById('subject');
-            if (subjectField) {
-                subjectField.value = `Inquiry about ${productTitle}`;
-                subjectField.focus();
-                
-                // Show notification
-                showNotification(`Contact form opened for ${productTitle}. Please fill in your details.`, 'info');
-            }
-        }, 800);
+        // Update cart count
+        updateCartCount();
     });
 });
 
-// === CART COUNT UPDATER (Not used for inquiries anymore) ===
+// === CART COUNT UPDATER ===
 let cartCount = 0;
 
 function updateCartCount() {
