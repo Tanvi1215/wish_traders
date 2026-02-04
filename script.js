@@ -191,23 +191,40 @@ const inquiryButtons = document.querySelectorAll('.btn-add-cart');
 
 inquiryButtons.forEach(button => {
     button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Get product name
         const productCard = e.target.closest('.product-card');
         const productTitle = productCard.querySelector('.product-title').textContent;
         
-        // Show notification
-        showNotification(`Inquiry added for ${productTitle}. Please contact us for pricing details.`, 'info');
+        // Scroll to contact form smoothly
+        const contactSection = document.getElementById('contact');
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         
-        // Update cart count
-        updateCartCount();
+        // Wait for scroll to complete, then pre-fill subject
+        setTimeout(() => {
+            const subjectField = document.getElementById('subject');
+            if (subjectField) {
+                subjectField.value = `Inquiry about ${productTitle}`;
+                subjectField.focus();
+                
+                // Show notification
+                showNotification(`Contact form opened for ${productTitle}. Please fill in your details.`, 'info');
+            }
+        }, 800);
     });
 });
 
-// === CART COUNT UPDATER ===
+// === CART COUNT UPDATER (Not used for inquiries anymore) ===
 let cartCount = 0;
 
 function updateCartCount() {
     cartCount++;
     const cartCountElement = document.querySelector('.cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = cartCount;
+    }
+}
     if (cartCountElement) {
         cartCountElement.textContent = cartCount;
         cartCountElement.style.animation = 'none';
