@@ -1,4 +1,4 @@
-// ========================================
+ // ========================================
 // Wish Traders - Modern Interactive JavaScript
 // ========================================
 
@@ -191,14 +191,25 @@ const inquiryButtons = document.querySelectorAll('.btn-add-cart');
 
 inquiryButtons.forEach(button => {
     button.addEventListener('click', (e) => {
+        e.preventDefault();
         const productCard = e.target.closest('.product-card');
         const productTitle = productCard.querySelector('.product-title').textContent;
         
-        // Show notification
-        showNotification(`Inquiry added for ${productTitle}. Please contact us for pricing details.`, 'info');
+        // Scroll to contact form
+        const contactSection = document.getElementById('contact');
+        contactSection.scrollIntoView({ behavior: 'smooth' });
         
-        // Update cart count
-        updateCartCount();
+        // Pre-fill subject field with product name
+        setTimeout(() => {
+            const subjectField = document.getElementById('subject');
+            if (subjectField) {
+                subjectField.value = `Inquiry about ${productTitle}`;
+                subjectField.focus();
+            }
+        }, 800); // Wait for scroll to complete
+        
+        // Show notification
+        showNotification(`Redirecting to contact form for ${productTitle}`, 'success');
     });
 });
 
